@@ -9,8 +9,6 @@ import Loading from '../../components/Loading'
 import CertsLIST from '../../components/Certificate/CertsLIST'
 import getCertData from '../../components/Admin/displayCertData'
 
-let contract
-
 const MyCerts = ({ search }) => {
   let navigate = useNavigate()
 
