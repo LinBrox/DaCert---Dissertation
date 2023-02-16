@@ -1,0 +1,47 @@
+{
+    "name": "newtest",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon backend/server.js",
+        "client": "npm start --prefix frontend",
+        "dev": "concurrently \"npm start\" \"npm run client\""
+    },
+    "author": "Linton Bryan-Fox",
+    "license": "ISC",
+    "dependencies": {
+        "@react-pdf/renderer": "^3.1.3",
+        "@truffle/hdwallet-provider": "^1.7.0",
+        "bcrypt": "^5.1.0",
+        "bcryptjs": "^2.4.3",
+        "bootstrap": "^5.2.3",
+        "concurrently": "^7.6.0",
+        "dotenv": "^16.0.3",
+        "ethers": "^5.7.2",
+        "express": "^4.18.2",
+        "express-async-handler": "^1.2.0",
+        "html-pdf": "^3.0.1",
+        "html-to-pdfmake": "^2.4.16",
+        "html2canvas": "^1.4.1",
+        "jsonwebtoken": "^9.0.0",
+        "jspdf": "^2.5.1",
+        "mongoose": "^6.8.2",
+        "nodemon": "^2.0.20",
+        "pdfmake": "^0.2.7",
+        "prop-types": "^15.8.1",
+        "react": "^18.2.0",
+        "react-bootstrap": "^2.7.0",
+        "react-dom": "^18.2.0",
+        "react-toastify": "^9.1.1",
+        "reactjs-popup": "^2.0.5",
+        "redux-devtools-extension": "^2.13.9",
+        "solc": "^0.8.17",
+        "web3": "^1.8.1"
+    },
+    "devDependencies": {
+        "sass": "^1.57.1",
+        "sass-loader": "^13.2.0",
+        "webpack": "^5.75.0"
+    }
+}

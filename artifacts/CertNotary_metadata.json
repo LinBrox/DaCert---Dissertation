@@ -1,0 +1,164 @@
+{
+	"compiler": {
+		"version": "0.5.16+commit.9c3226ce"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "_certificateId",
+						"type": "bytes32"
+					}
+				],
+				"name": "certificateGenerated",
+				"type": "event"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "certificates",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "date",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "expDate",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_id",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_title",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_date",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_expDate",
+						"type": "uint256"
+					}
+				],
+				"name": "generateCertificate",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_id",
+						"type": "string"
+					}
+				],
+				"name": "getData",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts\\CertNotary.sol": "CertNotary"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts\\CertNotary.sol": {
+			"keccak256": "0x3d5ec35b76d0e8767243396bca8b047d6c8bbd7f4bf910fe29bb00b6077a75b5",
+			"urls": [
+				"bzz-raw://4c21432db165f8cc500b9b279d04f3079837b4bdb98e8fd2dadf42eddc383550",
+				"dweb:/ipfs/Qmcpe5Ma8Ei86S52DYzu25kLkdSaPxr2yc5NG2SzcyRvw8"
+			]
+		}
+	},
+	"version": 1
+}
