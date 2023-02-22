@@ -4,6 +4,13 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const certRoutes = require('./routes/certRoutes');
 const {notFound, errorHandler} = require('./middlewares/errorMiddleware');
+const isAdmin = (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
+      next()
+    } else {
+      res.status(401).json({ message: 'Not authorized as an admin' })
+    }
+  }
 
 const app = express();
 dotenv.config();
@@ -13,6 +20,15 @@ app.use(express.json());
 app.get('/',(req,res) =>{
     res.send("API is running");
 });
+
+app.get('/api/users/all', isAdmin, async (req, res) => {
+    try {
+      const users = await User.find({});
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 
 app.get('/api/certTest', (req,res) => {
     res.json(certTest);

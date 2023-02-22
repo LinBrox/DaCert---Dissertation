@@ -7,6 +7,7 @@ import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import MainScreen from '../../components/MainScreen'
 import Web3 from 'web3'
+import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa'
 
 const RegisterScreen = () => {
   const [web3, setWeb3] = useState(null)
@@ -136,21 +137,6 @@ const RegisterScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </Form.Group>
-          <Form.Group controlId="walletID">
-            <Button
-              onClick={connectMetaMask}
-              style={{ marginLeft: 10, marginBottom: 6 }}
-              size="lg"
-            >
-              Click Here to sync Wallet
-            </Button>
-            <Form.Control
-              type="text"
-              value={accounts[0]}
-              placeholder="Enter WalletID"
-              onChange={(e) => setWalletID(e.target.value)}
-            />
-          </Form.Group>
 
           {picMessage && (
             <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
@@ -163,6 +149,22 @@ const RegisterScreen = () => {
               onChange={(e) => postDetails(e.target.files[0])}
             />
           </Form.Group>
+          <div style={{ display: 'flex' }}>
+            <Form.Group controlId="walletID">
+              <Button
+                onClick={connectMetaMask}
+                style={{ marginLeft: 10, marginBottom: 6 }}
+                size="lg"
+              >
+                Click Here to sync Wallet{' '}
+              </Button>
+              {walletID ? (
+                <FaThumbsUp style={{ color: 'green', marginLeft: 10 }} />
+              ) : (
+                <FaThumbsDown style={{ color: 'red', marginLeft: 10 }} />
+              )}
+            </Form.Group>
+          </div>
           <Button
             variant="primary"
             type="submit"

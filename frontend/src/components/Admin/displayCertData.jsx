@@ -1,5 +1,4 @@
 import { ethers } from 'ethers'
-
 let contract
 const getCertData = async (_id) => {
   const Address = '0xe54601A62EA1825D946f3470C7f2eBA9c653AE78'
@@ -71,7 +70,6 @@ const getCertData = async (_id) => {
   const signer = provider.getSigner()
   contract = new ethers.Contract(Address, ABI, signer)
   console.log(contract.address)
-
 
   // Call the getData function
   const data = await contract.getData(String(_id))
