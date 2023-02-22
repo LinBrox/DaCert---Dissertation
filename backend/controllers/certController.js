@@ -27,7 +27,7 @@ const getCertById = asycHandler(async (req, res) => {
   if (cert) {
     res.json(cert)
   } else {
-    res.status(404).json({ message: 'Note not found' })
+    res.status(404).json({ message: 'Certificate not found' })
   }
 
   res.json(cert)

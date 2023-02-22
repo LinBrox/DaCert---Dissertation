@@ -8,12 +8,12 @@ import ErrorMessage from '../../components/ErrorMessage'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import "./SingleCert.css"
-import Web3 from 'web3'
 
 function SingleCert() {
   const [name, setName] = useState()
   const [title, setTitle] = useState()
   const [date, setDate] = useState('')
+  const [expDate, setExpDate] = useState('')
   const [hash, setHash] = useState()
   const [logo, setLogo] = useState('')
   const [logoMessage, setLogoMessage] = useState()
@@ -133,15 +133,23 @@ function SingleCert() {
                     onChange={(e) => setDate(e.target.value)}
                   />
                 </Form.Group>
+                <Form.Group className="settings" controlId="date">
+                  <Form.Label className="label">Expiry Date</Form.Label>
+                  <Form.Control
+                    type="string"
+                    value={expDate}
+                    onChange={(e) => setExpDate(e.target.value)}
+                  />
+                </Form.Group>
 
-                <Form.Group className="settings" controlId="hash">
+                {/* <Form.Group className="settings" controlId="hash">
                   <Form.Label className="label">HASH</Form.Label>
                   <Form.Control
                     value={hash}
                     placeholder="Enter the HASH"
                     onChange={(e) => setHash(e.target.value)}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 {logoMessage && (
                   <ErrorMessage variant="danger">{logoMessage}</ErrorMessage>
                 )}

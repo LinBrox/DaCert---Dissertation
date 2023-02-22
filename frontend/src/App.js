@@ -15,6 +15,7 @@ import {
 import DashBoard from './screens/DashBoard/MyCerts'
 import SingleCert from './screens/SingleCert/SingleCert'
 import { useState } from 'react'
+import ContactForm from './components/Footer/contactUs'
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
       <Route path="/createcert" element={<CreateCert />} />
       <Route path="/certs/:id" element={<SingleCert />} />
       <Route path="/certs" element={<DashBoard search={search} />} />
+      <Route path="/contactUs" element={<ContactForm />} />
     </Routes>
     <Footer />
   </Router>

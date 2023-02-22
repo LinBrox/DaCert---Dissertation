@@ -1,5 +1,6 @@
 import React from 'react'
 import jsPDF from 'jspdf'
+import { Button } from 'react-bootstrap'
 
 function CertsLIST({ certs }) {
   const generatePDF = () => {
@@ -22,16 +23,20 @@ function CertsLIST({ certs }) {
       const dataURL = canvas.toDataURL('image/png')
       const pdf = new jsPDF('l', 'mm', 'a4')
       pdf.addImage(dataURL, 'png', 0, 5, 0, 210)
-      const newWindow = window.open(pdf.output('bloburl'), "", "width=1000,height=800")
+      const newWindow = window.open(
+        pdf.output('bloburl'),
+        '',
+        'width=1000,height=800',
+      )
       newWindow.focus()
     }
     img.src = url
   }
   return (
     <blockquote className="blockquote mb-0">
-      <button className="btn btn-primary" onClick={generatePDF}>
+      <Button variant="primary" onClick={generatePDF}>
         Generate PDF to send
-      </button>
+      </Button>
       <svg width="1000" height="700" id="certificate" className="border">
         <rect
           fill="#A0A0A0"

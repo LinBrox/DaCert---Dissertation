@@ -1,5 +1,6 @@
+import { Button, Modal } from 'bootstrap';
 import React, { useState } from 'react'
-import { Aims, Testimonials, Vision } from '../Modals/Modals4Footer'
+import { Aims, MERN, Promo, Testimonials, Vision, Want_To_Register } from '../Modals/Modals4Footer'
 import {
   Box,
   Container,
@@ -23,13 +24,14 @@ const Footer = () => {
           </Column>
           <Column>
             <Heading>Services</Heading>
-            <FooterLink href="#">Want To Register As A Admin?</FooterLink>
-            <FooterLink href="#">Promotion of Business </FooterLink>
-            <FooterLink href="#">Coding a MERN FUll Stack</FooterLink>
+            <Want_To_Register>Want to Register</Want_To_Register>
+            <Promo>Promotion</Promo>
+            <MERN>MERN</MERN>
+            
           </Column>
           <Column>
             <Heading>Contact Us</Heading>
-            <FooterLink href="#">Linton Bryan-Fox</FooterLink>
+            <FooterLink href="/contactUs">Linton Bryan-Fox</FooterLink>
           </Column>
           <Column>
             <Heading>Social Media</Heading>
