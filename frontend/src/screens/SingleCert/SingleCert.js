@@ -141,15 +141,6 @@ function SingleCert() {
                     onChange={(e) => setExpDate(e.target.value)}
                   />
                 </Form.Group>
-
-                {/* <Form.Group className="settings" controlId="hash">
-                  <Form.Label className="label">HASH</Form.Label>
-                  <Form.Control
-                    value={hash}
-                    placeholder="Enter the HASH"
-                    onChange={(e) => setHash(e.target.value)}
-                  />
-                </Form.Group> */}
                 {logoMessage && (
                   <ErrorMessage variant="danger">{logoMessage}</ErrorMessage>
                 )}

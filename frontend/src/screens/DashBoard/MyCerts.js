@@ -12,9 +12,11 @@ import getCertData from '../../components/Admin/displayCertData'
 const MyCerts = ({ search }) => {
   let navigate = useNavigate()
 
+
+
   const dispatch = useDispatch()
   const [_id, set_ID] = useState('')
- 
+
   const certList = useSelector((state) => state.certList)
   const { error, certs, loading } = certList
 
@@ -70,21 +72,21 @@ const MyCerts = ({ search }) => {
               </Button>
             </Link>
             <Button
-              onClick={getCertData(_id)}
+              onClick={() => getCertData(_id)}
               style={{ marginLeft: 10, marginBottom: 6 }}
               size="lg"
             >
               Get a Certificate Based on ID
-              <div>
+            </Button>
+            <div>
                 <input
-                  type="int"
-                  placeholder="Input a users ID"
+                  type="text"
+                  placeholder="Enter certificate ID"
                   value={_id}
                   onChange={(e) => set_ID(e.target.value)}
-                  style={{ flex: 'center' }}
+                  style={{ marginRight: 10 }}
                 />
               </div>
-            </Button>
           </>
         ) : null}
         {errorDelete && (
