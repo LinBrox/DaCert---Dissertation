@@ -15,7 +15,6 @@ const MyCerts = ({ search }) => {
   const dispatch = useDispatch()
   const [_id, set_ID] = useState('')
  
-  
   const certList = useSelector((state) => state.certList)
   const { error, certs, loading } = certList
 
