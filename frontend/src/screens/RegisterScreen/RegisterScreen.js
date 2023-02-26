@@ -99,7 +99,14 @@ const RegisterScreen = () => {
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>
+              Name{' '}
+              {name ? (
+                <FaThumbsUp style={{ color: 'green', marginLeft: 10 }} />
+              ) : (
+                <FaThumbsDown style={{ color: 'red', marginLeft: 10 }} />
+              )}
+            </Form.Label>
             <Form.Control
               type="name"
               value={name}
@@ -109,7 +116,14 @@ const RegisterScreen = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email Address</Form.Label>
+            <Form.Label>
+              Email Address{' '}
+              {email ? (
+                <FaThumbsUp style={{ color: 'green', marginLeft: 10 }} />
+              ) : (
+                <FaThumbsDown style={{ color: 'red', marginLeft: 10 }} />
+              )}
+            </Form.Label>
             <Form.Control
               type="email"
               value={email}
@@ -119,7 +133,12 @@ const RegisterScreen = () => {
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Password{' '}
+              {password ? (
+                <FaThumbsUp style={{ color: 'green', marginLeft: 10 }} />
+              ) : (
+                <FaThumbsDown style={{ color: 'red', marginLeft: 10 }} />
+              )}</Form.Label>
             <Form.Control
               type="password"
               value={password}
@@ -129,7 +148,12 @@ const RegisterScreen = () => {
           </Form.Group>
 
           <Form.Group controlId="confirmPassword">
-            <Form.Label>Confirm Password</Form.Label>
+            <Form.Label>Confirm Password{' '}
+              {confirmPassword ? (
+                <FaThumbsUp style={{ color: 'green', marginLeft: 10 }} />
+              ) : (
+                <FaThumbsDown style={{ color: 'red', marginLeft: 10 }} />
+              )}</Form.Label>
             <Form.Control
               type="password"
               value={confirmPassword}

@@ -29,7 +29,7 @@ export default configureStore({
     certCreate: certCreateReducuer,
     certUpdate: certUpdateReducuer,
     certDelete: certDeleteReducuer,
-    // adminSearch: adminSearchReducuer,
+    adminSearchReducuer: adminSearchReducuer,
   },
   preloadedState: initialState,
 })

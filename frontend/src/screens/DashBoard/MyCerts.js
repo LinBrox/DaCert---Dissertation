@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, Button, Card } from 'react-bootstrap'
+import { Accordion, Button, Card, Table } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import MainScreen from '../../components/MainScreen'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,13 +7,15 @@ import { deleteCertAction, listCerts } from '../../actions/certActions'
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import CertsLIST from '../../components/Certificate/CertsLIST'
-import getCertData from '../../components/Admin/displayCertData'
+import GetCertData from '../../components/Admin/displayCertData'
+import { allUsers } from '../../actions/userActions'
 
 const MyCerts = ({ search }) => {
   let navigate = useNavigate()
 
   const dispatch = useDispatch()
   const [_id, set_ID] = useState('')
+  const [data, setData] = useState([])
 
   const certList = useSelector((state) => state.certList)
   const { error, certs, loading } = certList
@@ -31,6 +33,8 @@ const MyCerts = ({ search }) => {
     success: successDelete,
   } = certDelete
 
+  const { users } = useSelector((state) => state.adminSearchReducuer)
+
   //these two lines imports the users's session over
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -43,6 +47,10 @@ const MyCerts = ({ search }) => {
     if (window.confirm('Are you sure you want to delete this certificate?')) {
       dispatch(deleteCertAction(id))
     }
+  }
+
+  const handleGetAllUsers = () => {
+    dispatch(allUsers(_id))
   }
 
   useEffect(() => {
@@ -70,11 +78,18 @@ const MyCerts = ({ search }) => {
               </Button>
             </Link>
             <Button
-              onClick={() => getCertData(_id)}
+              onClick={() => GetCertData(_id, setData)}
               style={{ marginLeft: 10, marginBottom: 6 }}
               size="lg"
             >
               Get a Certificate Based on ID
+            </Button>
+            <Button
+              onClick={() => handleGetAllUsers(_id)}
+              style={{ marginLeft: 10, marginBottom: 6 }}
+              size="lg"
+            >
+              Get All Users
             </Button>
             <div>
               <input
@@ -87,6 +102,26 @@ const MyCerts = ({ search }) => {
                 style={{ marginRight: 10 }}
               />
             </div>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  {/* Add more table headers here */}
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user._id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    {/* Add more table cells here */}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </>
         ) : null}
         {errorDelete && (

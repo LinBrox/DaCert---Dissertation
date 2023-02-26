@@ -9,6 +9,7 @@ contract CertNotary {
         string title;
         uint256 date;
         uint256 expDate;
+        bytes32 byte_id;
     }
 
     mapping(bytes32 => Certificate) public certificates;
@@ -36,14 +37,14 @@ contract CertNotary {
         certificates[byte_id].expDate == 0,
         "Certificate with given id already exists"
     );
-    certificates[byte_id] = Certificate(_name, _title, _date, _expDate);
+    certificates[byte_id] = Certificate(_name, _title, _date, _expDate, byte_id);
     emit certificateGenerated(byte_id);
 }
 
-   function getData(bytes memory _id) public view returns(string memory, string memory, uint256, uint256) {
+   function getData(bytes memory _id) public view returns(string memory, string memory, uint256, uint256, bytes32) {
         bytes32 byte_id = stringToBytes32(_id);
         Certificate memory temp = certificates[byte_id];
         require(temp.expDate != 0, "No data exists");
-        return (temp.name, temp.title, temp.date, temp.expDate);
+        return (temp.name, temp.title, temp.date, temp.expDate, temp.byte_id);
     }
 }

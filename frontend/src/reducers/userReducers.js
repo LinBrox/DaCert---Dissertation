@@ -25,7 +25,7 @@ export const userLoginReducuer = (state = {}, action) => {
     case USER_LOGOUT:
       return {}
     default:
-      return state;
+      return state
   }
 }
 export const userRegisterReducuer = (state = {}, action) => {
@@ -37,7 +37,7 @@ export const userRegisterReducuer = (state = {}, action) => {
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload }
     default:
-      return state;
+      return state
   }
 }
 
@@ -50,19 +50,21 @@ export const userUpdateReducuer = (state = {}, action) => {
     case USER_UPDATE_FAIL:
       return { loading: false, error: action.payload, success: false }
     default:
-      return state;
+      return state
   }
 }
 
-// export const adminSearchReducuer = (state = {}, action) => {
-//   switch (action.type) {
-//     case ADMIN_SEARCH_REQUEST:
-//       return { loading: true }
-//     case ADMIN_SEARCH_SUCCESS:
-//       return { loading: false, userInfo: action.payload, success: true }
-//     case ADMIN_SEARCH_FAIL:
-//       return { loading: false, error: action.payload, success: false }
-//     default:
-//       return state;
-//   }
-// }
+export const adminSearchReducuer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_SEARCH_REQUEST:
+      return { adminAllLoading: true }
+    case ADMIN_SEARCH_SUCCESS:
+      const users = action.payload
+      console.log(users)
+      return { adminAllLoading: false, users, success: true }
+    case ADMIN_SEARCH_FAIL:
+      return { adminAllLoading: false, adminError: action.payload, success: false }
+    default:
+      return state
+  }
+}

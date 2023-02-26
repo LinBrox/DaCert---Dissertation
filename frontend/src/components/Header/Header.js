@@ -24,6 +24,7 @@ const Header = ({ setSearch }) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
+        {userInfo ? (
           <Nav className="m-auto">
             <Form inline>
               <Form.Control
@@ -33,6 +34,7 @@ const Header = ({ setSearch }) => {
               />
             </Form>
           </Nav>
+        ) : null}
           {userInfo ? (
             <Nav>
               <Nav.Link>

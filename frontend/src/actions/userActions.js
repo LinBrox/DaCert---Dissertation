@@ -10,7 +10,44 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  ADMIN_SEARCH_REQUEST,
+  ADMIN_SEARCH_SUCCESS,
+  ADMIN_SEARCH_FAIL,
 } from '../constants/userConstants'
+
+export const allUsers = (_id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ADMIN_SEARCH_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get('/api/users/all', config)
+    dispatch({
+      type: ADMIN_SEARCH_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.message
+        ? error.response.data.message
+        : error.message
+    console.log(message)
+    dispatch({
+      type: ADMIN_SEARCH_FAIL,
+      payload: message,
+    })
+  }
+}
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -120,33 +157,3 @@ export const updateProfile = (user, isAdmin) => async (dispatch, getState) => {
     })
   }
 }
-
-// export const adminSearch = (searchTerm) => async (dispatch, getState) => {
-//   try {
-//     const {
-//       userLogin: { userInfo },
-//     } = getState()
-
-//     const config = {
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${userInfo.token}`,
-//       },
-//     }
-
-//     const { data } = await axios.get(
-//       `/api/users/search?searchTerm=${searchTerm}`,
-//       config,
-//     )
-
-//     dispatch({ type: ADMIN_SEARCH_SUCCESS, payload: data })
-//   } catch (error) {
-//     dispatch({
-//       type: ADMIN_SEARCH_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     })
-//   }
-// }

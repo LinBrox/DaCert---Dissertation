@@ -8,9 +8,6 @@ import ErrorMessage from '../../components/ErrorMessage'
 import { useNavigate } from 'react-router-dom'
 import { ethers } from 'ethers'
 
-// 1. Line 173 needs to be in MongoDB then we can just call that user
-// and all their relevant certs Line 59 is the issue it is undefined when submitting
-
 let contract
 
 const CreateCert = () => {
@@ -74,8 +71,8 @@ const CreateCert = () => {
 
   const addtoBlockchain = (e) => {
     // CSet Variables for the Smart Contract i.e ABI, The smart contract address
-    const Address = '0xe54601A62EA1825D946f3470C7f2eBA9c653AE78'
-    const ABI = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"bytes32","name":"_certificateId","type":"bytes32"}],"name":"certificateGenerated","type":"event"},{"constant":true,"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"certificates","outputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"date","type":"uint256"},{"internalType":"uint256","name":"expDate","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"uint256","name":"_date","type":"uint256"},{"internalType":"uint256","name":"_expDate","type":"uint256"}],"name":"generateCertificate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"bytes","name":"_id","type":"bytes"}],"name":"getData","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}]
+    const Address = '0x091d7Dd5737f34990B417D048B6f7075FfbBA146'
+    const ABI = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"bytes32","name":"_certificateId","type":"bytes32"}],"name":"certificateGenerated","type":"event"},{"constant":true,"inputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"name":"certificates","outputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"string","name":"title","type":"string"},{"internalType":"uint256","name":"date","type":"uint256"},{"internalType":"uint256","name":"expDate","type":"uint256"},{"internalType":"bytes32","name":"byte_id","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"string","name":"_name","type":"string"},{"internalType":"string","name":"_title","type":"string"},{"internalType":"uint256","name":"_date","type":"uint256"},{"internalType":"uint256","name":"_expDate","type":"uint256"}],"name":"generateCertificate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"bytes","name":"_id","type":"bytes"}],"name":"getData","outputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"}]
     //code to connect the smart contract privider sets the connect - Signer signs messages and sends transactions wallet is signer - contract is the defintion of what contract to use (ABI + ADDRESS + SIGNER)
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
