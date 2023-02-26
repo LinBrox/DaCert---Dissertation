@@ -25,6 +25,7 @@ contract CertNotary {
         }
     }
 
+    //This function now stores the certificateID in the blockchain but it is not displayed it is recorded as the event 
     function generateCertificate(
         string memory _name,
         string memory _title,
