@@ -35,7 +35,7 @@ const MyCerts = ({ search }) => {
 
   const { users } = useSelector((state) => state.adminSearchReducuer)
 
-  const [deleted, setDeleted] = useState(false);
+  const [deleted, setDeleted] = useState(false)
 
   //these two lines imports the users's session over
   const userLogin = useSelector((state) => state.userLogin)
@@ -47,29 +47,29 @@ const MyCerts = ({ search }) => {
   //Delete Handler - needs work re-renders the page twice
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure you want to delete this certificate?')) {
-      dispatch(deleteCertAction(id));
-      setDeleted(true);
+      dispatch(deleteCertAction(id))
+      setDeleted(true)
     }
   }
   //Delete Handler - needs work re-renders the page twice
   const deleteHandlerUser = (_id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      dispatch(deleteUserAction(_id));
-      setDeleted(true);
+      dispatch(deleteUserAction(_id))
+      setDeleted(true)
     }
   }
 
-  const handleGetAllUsers = () => {
-    dispatch(allUsers(_id))
+  const handleRowClick = (_id) => {
+    console.log(`Clicked row with user ID: ${_id}`)
   }
-  
+
   useEffect(() => {
-    dispatch(listCerts());
-  }, [dispatch, deleted]);
-  
+    dispatch(listCerts())
+  }, [dispatch, deleted])
+
   useEffect(() => {
-    dispatch(allUsers(_id));
-  }, [dispatch, deleted]);
+    dispatch(allUsers(_id))
+  }, [dispatch, deleted])
 
   useEffect(() => {
     dispatch(listCerts())
@@ -102,13 +102,6 @@ const MyCerts = ({ search }) => {
             >
               Get a Certificate Based on ID
             </Button>
-            <Button
-              onClick={() => handleGetAllUsers(_id)}
-              style={{ marginLeft: 10, marginBottom: 6 }}
-              size="lg"
-            >
-              Get All Users
-            </Button>
             <div>
               <input
                 type="text"
@@ -122,6 +115,7 @@ const MyCerts = ({ search }) => {
             </div>
             <Table striped bordered hover>
               <thead class="thead-dark">
+                All Users
                 <tr>
                   <th>User ID</th>
                   <th>Name</th>
@@ -129,11 +123,12 @@ const MyCerts = ({ search }) => {
                   <th>walletID</th>
                   <th>Delete</th>
                   <th>Edit</th>
+                  <th>No of Certs</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user._id}>
+                  <tr key={user._id} onClick={() => handleRowClick(user._id)}>
                     <td>{user._id}</td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
@@ -156,6 +151,7 @@ const MyCerts = ({ search }) => {
                         Edit
                       </Button>
                     </td>
+                    <td>?</td>
                   </tr>
                 ))}
               </tbody>
@@ -169,6 +165,58 @@ const MyCerts = ({ search }) => {
         {loadingDelete && <Loading />}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
+
+        {/* Mapping for the ADMIN */}
+        {certs
+          .filter((filteredNote) =>
+            filteredNote.title.toLowerCase().includes(search.toLowerCase()),
+          )
+          .map((certs) => (
+            <Accordion>
+              <Card style={{ margin: 10 }} key={certs._id}>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header style={{ display: 'flex' }}>
+                    <Card.Header style={{ display: 'flex' }}>
+                      <span
+                        style={{
+                          color: 'black',
+                          textDecoration: 'none',
+                          cursor: 'pointer',
+                          alignSelf: 'center',
+                          fontSize: 30,
+                        }}
+                      >
+                        This Certificate is for " {certs.title} "
+                      </span>
+                      {isAdmin ? (
+                        <div>
+                          <Link to={`/certs/${certs._id}`}>
+                            <Button className="ml-4">Edit</Button>
+                          </Link>
+                          <Button
+                            variant="danger"
+                            className="ml-4"
+                            onClick={() => deleteHandler(certs._id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      ) : null}
+                    </Card.Header>
+                  </Accordion.Header>
+
+                  <Accordion.Body>
+                    {' '}
+                    <Card.Body>
+                      <CertsLIST certs={certs} />
+                    </Card.Body>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Card>
+            </Accordion>
+          ))}
+
+        {/* Mapping for the users */}
         {certs
           .filter((filteredNote) =>
             filteredNote.title.toLowerCase().includes(search.toLowerCase()),
