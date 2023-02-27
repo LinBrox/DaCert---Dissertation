@@ -14,7 +14,6 @@ const GetCertData = async (_id, setData) => {
   const data = await contract.getData(String(_id))
   console.log(data)
   setData(data)
-  console.log(data[0])
   return data
 }
 

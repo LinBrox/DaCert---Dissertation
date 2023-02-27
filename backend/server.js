@@ -4,7 +4,7 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const certRoutes = require('./routes/certRoutes');
 const {notFound, errorHandler} = require('./middlewares/errorMiddleware');
-const { isAdmin } = require('./middlewares/authMiddleware');
+const { isAdmin, protect } = require('./middlewares/authMiddleware');
 const User = require('./models/userModel');
 
 const app = express();
@@ -16,6 +16,21 @@ app.get('/',(req,res) =>{
     res.send("API is running");
 });
 
+app.delete('/api/users/:id', protect, isAdmin, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+      await user.remove();
+      res.json({ message: 'User removed' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.get('/api/users/all', async (req, res) => {
     try {
       const users = await User.find({});
@@ -24,6 +39,7 @@ app.get('/api/users/all', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
+
 
 app.get('/api/certTest', (req,res) => {
     res.json(certTest);

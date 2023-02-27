@@ -1,5 +1,6 @@
 import {
   adminSearchReducuer,
+  userDeleteReducer,
   userLoginReducuer,
   userRegisterReducuer,
   userUpdateReducuer,
@@ -30,6 +31,7 @@ export default configureStore({
     certUpdate: certUpdateReducuer,
     certDelete: certDeleteReducuer,
     adminSearchReducuer: adminSearchReducuer,
+    userDeleteReducer: userDeleteReducer,
   },
   preloadedState: initialState,
 })

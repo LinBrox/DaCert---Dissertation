@@ -8,7 +8,7 @@ import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import CertsLIST from '../../components/Certificate/CertsLIST'
 import GetCertData from '../../components/Admin/displayCertData'
-import { allUsers } from '../../actions/userActions'
+import { allUsers, deleteUserAction } from '../../actions/userActions'
 
 const MyCerts = ({ search }) => {
   let navigate = useNavigate()
@@ -35,6 +35,8 @@ const MyCerts = ({ search }) => {
 
   const { users } = useSelector((state) => state.adminSearchReducuer)
 
+  const [deleted, setDeleted] = useState(false);
+
   //these two lines imports the users's session over
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -45,13 +47,29 @@ const MyCerts = ({ search }) => {
   //Delete Handler - needs work re-renders the page twice
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure you want to delete this certificate?')) {
-      dispatch(deleteCertAction(id))
+      dispatch(deleteCertAction(id));
+      setDeleted(true);
+    }
+  }
+  //Delete Handler - needs work re-renders the page twice
+  const deleteHandlerUser = (_id) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      dispatch(deleteUserAction(_id));
+      setDeleted(true);
     }
   }
 
   const handleGetAllUsers = () => {
     dispatch(allUsers(_id))
   }
+  
+  useEffect(() => {
+    dispatch(listCerts());
+  }, [dispatch, deleted]);
+  
+  useEffect(() => {
+    dispatch(allUsers(_id));
+  }, [dispatch, deleted]);
 
   useEffect(() => {
     dispatch(listCerts())
@@ -103,12 +121,14 @@ const MyCerts = ({ search }) => {
               />
             </div>
             <Table striped bordered hover>
-              <thead>
+              <thead class="thead-dark">
                 <tr>
                   <th>User ID</th>
                   <th>Name</th>
                   <th>Email</th>
-                  {/* Add more table headers here */}
+                  <th>walletID</th>
+                  <th>Delete</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
@@ -117,7 +137,25 @@ const MyCerts = ({ search }) => {
                     <td>{user._id}</td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
-                    {/* Add more table cells here */}
+                    <td>{user.walletID}</td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        className="ml-4"
+                        onClick={() => deleteHandlerUser(user._id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="success"
+                        className="ml-4"
+                        onClick={() => deleteHandler(user._id)}
+                      >
+                        Edit
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -131,7 +169,6 @@ const MyCerts = ({ search }) => {
         {loadingDelete && <Loading />}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
-        {console.log(certs.size)}
         {certs
           .filter((filteredNote) =>
             filteredNote.title.toLowerCase().includes(search.toLowerCase()),
