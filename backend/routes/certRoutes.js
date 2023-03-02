@@ -6,7 +6,8 @@ const {
   updateCert,
   deleteCert,
 } = require('../controllers/certController')
-const { protect } = require('../middlewares/authMiddleware')
+const { protect, isAdmin } = require('../middlewares/authMiddleware')
+const Certs = require('../models/certModel')
 
 const router = express.Router()
 
@@ -17,5 +18,17 @@ router
   .get(getCertById)
   .put(protect, updateCert)
   .delete(protect, deleteCert)
+
+  router.post('/', async (req, res) => {
+    try {
+      console.log(req, res)
+      const certs = await Certs.find({ user: req.query.certOwner })
+      res.json(certs)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  })
+  
 
 module.exports = router

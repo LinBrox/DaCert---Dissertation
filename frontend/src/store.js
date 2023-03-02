@@ -10,6 +10,7 @@ import {
   certCreateReducuer,
   certUpdateReducuer,
   certDeleteReducuer,
+  AdminSearchCertReducuer,
 } from './reducers/certsReducers'
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -32,6 +33,7 @@ export default configureStore({
     certDelete: certDeleteReducuer,
     adminSearchReducuer: adminSearchReducuer,
     userDeleteReducer: userDeleteReducer,
+    AdminSearchCertReducuer: AdminSearchCertReducuer,
   },
   preloadedState: initialState,
 })

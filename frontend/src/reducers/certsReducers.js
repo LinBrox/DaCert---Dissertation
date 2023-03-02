@@ -11,7 +11,24 @@ import {
   CERT_DELETE_REQUEST,
   CERT_DELETE_SUCCESS,
   CERT_DELETE_FAIL,
+  ADMIN_SEARCH_CERT_REQUEST,
+  ADMIN_SEARCH_CERT_SUCCESS,
+  ADMIN_SEARCH_CERT_FAIL,
 } from '../constants/certsConstants'
+
+export const AdminSearchCertReducuer = (state = { adminCerts: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_SEARCH_CERT_REQUEST:
+      return { loading: true }
+    case ADMIN_SEARCH_CERT_SUCCESS:
+      return { loading: false, certs: action.payload }
+    case ADMIN_SEARCH_CERT_FAIL:
+      return { loading: false, error: action.payload }
+
+    default:
+      return state
+  }
+}
 
 export const certListReducuer = (state = { certs: [] }, action) => {
   switch (action.type) {

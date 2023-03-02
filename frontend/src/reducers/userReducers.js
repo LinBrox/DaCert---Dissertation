@@ -63,7 +63,6 @@ export const adminSearchReducuer = (state = { users: [] }, action) => {
       return { adminAllLoading: true }
     case ADMIN_SEARCH_SUCCESS:
       const users = action.payload
-      console.log(users)
       return { adminAllLoading: false, users, success: true }
     case ADMIN_SEARCH_FAIL:
       return { adminAllLoading: false, adminError: action.payload, success: false }

@@ -2,6 +2,8 @@ const express = require('express')
 const { registerUser, authUser, updateUserProfile, allUsers, getUsers, deleteUser } = require('../controllers/userControllers')
 const router = express.Router()
 const { protect, isAdmin } = require("../middlewares/authMiddleware")
+const User = require('../models/userModel')
+
 
 router.route('/').post(registerUser, getUsers)
 router.route('/login').post(authUser)

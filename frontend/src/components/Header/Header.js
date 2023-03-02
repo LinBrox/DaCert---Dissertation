@@ -11,7 +11,7 @@ const Header = ({ setSearch }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  const logoutHandler = () => {
+  const logoutHandler = async() => {
     dispatch(logout())
     navigate('/')
   }

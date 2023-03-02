@@ -3,7 +3,11 @@ import { Accordion, Button, Card, Table } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import MainScreen from '../../components/MainScreen'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCertAction, listCerts } from '../../actions/certActions'
+import {
+  AdminSearchCertAction,
+  deleteCertAction,
+  listCerts,
+} from '../../actions/certActions'
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import CertsLIST from '../../components/Certificate/CertsLIST'
@@ -41,8 +45,6 @@ const MyCerts = ({ search }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   const isAdmin = userInfo && userInfo.isAdmin
-  console.log(userInfo.isAdmin)
-  console.log(userInfo)
 
   //Delete Handler - needs work re-renders the page twice
   const deleteHandler = (id) => {
@@ -59,9 +61,10 @@ const MyCerts = ({ search }) => {
     }
   }
 
-  const handleRowClick = (_id) => {
-    console.log(`Clicked row with user ID: ${_id}`)
-  }
+  const handleRowClick = (user) => {
+    console.log(`Clicked row with user ID: ${user._id}`);
+    dispatch(AdminSearchCertAction(user));
+  };
 
   useEffect(() => {
     dispatch(listCerts())
@@ -90,6 +93,48 @@ const MyCerts = ({ search }) => {
       <MainScreen title={`Welcome back ${userInfo.name}...`}>
         {isAdmin ? (
           <>
+            <Table striped bordered hover>
+              <thead class="thead-dark">
+                <tr>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>walletID</th>
+                  <th>Delete</th>
+                  <th>Edit</th>
+                  <th>No of Certs</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id} onClick={() => handleRowClick(user)}>
+                    <td>{user._id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.walletID}</td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        className="ml-4"
+                        onClick={() => deleteHandlerUser(user._id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="success"
+                        className="ml-4"
+                        onClick={() => deleteHandler(user._id)}
+                      >
+                        Edit
+                      </Button>
+                    </td>
+                    <td>{certs.filter((cert) => cert.user === user._id).length}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
             <Link to="/createcert">
               <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
                 Create a new Certificate
@@ -113,49 +158,6 @@ const MyCerts = ({ search }) => {
                 style={{ marginRight: 10 }}
               />
             </div>
-            <Table striped bordered hover>
-              <thead class="thead-dark">
-                All Users
-                <tr>
-                  <th>User ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>walletID</th>
-                  <th>Delete</th>
-                  <th>Edit</th>
-                  <th>No of Certs</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id} onClick={() => handleRowClick(user._id)}>
-                    <td>{user._id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.walletID}</td>
-                    <td>
-                      <Button
-                        variant="danger"
-                        className="ml-4"
-                        onClick={() => deleteHandlerUser(user._id)}
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                    <td>
-                      <Button
-                        variant="success"
-                        className="ml-4"
-                        onClick={() => deleteHandler(user._id)}
-                      >
-                        Edit
-                      </Button>
-                    </td>
-                    <td>?</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
           </>
         ) : null}
         {errorDelete && (
@@ -165,56 +167,6 @@ const MyCerts = ({ search }) => {
         {loadingDelete && <Loading />}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
-
-        {/* Mapping for the ADMIN */}
-        {certs
-          .filter((filteredNote) =>
-            filteredNote.title.toLowerCase().includes(search.toLowerCase()),
-          )
-          .map((certs) => (
-            <Accordion>
-              <Card style={{ margin: 10 }} key={certs._id}>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header style={{ display: 'flex' }}>
-                    <Card.Header style={{ display: 'flex' }}>
-                      <span
-                        style={{
-                          color: 'black',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                          alignSelf: 'center',
-                          fontSize: 30,
-                        }}
-                      >
-                        This Certificate is for " {certs.title} "
-                      </span>
-                      {isAdmin ? (
-                        <div>
-                          <Link to={`/certs/${certs._id}`}>
-                            <Button className="ml-4">Edit</Button>
-                          </Link>
-                          <Button
-                            variant="danger"
-                            className="ml-4"
-                            onClick={() => deleteHandler(certs._id)}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      ) : null}
-                    </Card.Header>
-                  </Accordion.Header>
-
-                  <Accordion.Body>
-                    {' '}
-                    <Card.Body>
-                      <CertsLIST certs={certs} />
-                    </Card.Body>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Card>
-            </Accordion>
-          ))}
 
         {/* Mapping for the users */}
         {certs

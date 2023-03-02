@@ -8,7 +8,6 @@ const GetCertData = async (_id, setData) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
   contract = new ethers.Contract(Address, ABI, signer)
-  console.log(contract.address)
 
   // Call the getData function
   const data = await contract.getData(String(_id))

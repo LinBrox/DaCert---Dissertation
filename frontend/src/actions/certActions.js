@@ -12,7 +12,51 @@ import {
   CERT_DELETE_REQUEST,
   CERT_DELETE_SUCCESS,
   CERT_DELETE_FAIL,
+  ADMIN_SEARCH_CERT_REQUEST,
+  ADMIN_SEARCH_CERT_SUCCESS,
+  ADMIN_SEARCH_CERT_FAIL,
 } from '../constants/certsConstants'
+
+export const AdminSearchCertAction = (user) => async (dispatch, getState) => {
+  try {
+    console.log(user._id)
+    const { userLogin: { userInfo } } = getState()
+
+    if (!userInfo || !userInfo.isAdmin) {
+      throw new Error('You are not authorized to perform this action.')
+    }
+    
+    dispatch({
+      type: ADMIN_SEARCH_CERT_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+      params: {
+        certOwner: user._id,
+      },
+    }
+
+    const { data } = await axios.post(`/api/certs/`, {certOwner:user._id}, config);
+
+    dispatch({
+      type: ADMIN_SEARCH_CERT_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    dispatch({
+      type: ADMIN_SEARCH_CERT_FAIL,
+      payload: message,
+    })
+  }
+}
+
 
 export const listCerts = () => async (dispatch, getState) => {
   try {
@@ -30,7 +74,7 @@ export const listCerts = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get('/api/certs', config)
+    const { data } = await axios.get('/api/certs/', config)
     dispatch({
       type: CERT_LIST_SUCCESS,
       payload: data,
@@ -92,35 +136,35 @@ export const deleteCertAction = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: CERT_DELETE_REQUEST,
-    });
+    })
 
     const {
       userLogin: { userInfo },
-    } = getState();
+    } = getState()
 
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
-    };
+    }
 
-    const { data } = await axios.delete(`/api/certs/${id}`, config);
+    const { data } = await axios.delete(`/api/certs/${id}`, config)
 
     dispatch({
       type: CERT_DELETE_SUCCESS,
       payload: data,
-    });
+    })
   } catch (error) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
-        : error.message;
+        : error.message
     dispatch({
       type: CERT_DELETE_FAIL,
       payload: message,
-    });
+    })
   }
-};
+}
 export const updateCertAction = (id, name, title, date, hash, logo) => async (
   dispatch,
   getState,
