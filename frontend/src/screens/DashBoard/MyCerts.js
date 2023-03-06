@@ -38,6 +38,8 @@ const MyCerts = ({ search }) => {
   } = certDelete
 
   const { users } = useSelector((state) => state.adminSearchReducuer)
+  const { adminCerts } = useSelector((state) => state.AdminSearchCertReducuer)
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const [deleted, setDeleted] = useState(false)
 
@@ -62,17 +64,21 @@ const MyCerts = ({ search }) => {
   }
 
   const handleRowClick = (user) => {
-    console.log(`Clicked row with user ID: ${user._id}`);
-    dispatch(AdminSearchCertAction(user));
-  };
+    console.log(`Clicked row with user ID: ${user._id}`)
+    setSelectedUser(user)
+    dispatch(AdminSearchCertAction(user))
+  }
 
   useEffect(() => {
     dispatch(listCerts())
   }, [dispatch, deleted])
 
-  useEffect(() => {
-    dispatch(allUsers(_id))
-  }, [dispatch, deleted])
+  useEffect(
+    (_id) => {
+      dispatch(allUsers(_id))
+    },
+    [dispatch, deleted],
+  )
 
   useEffect(() => {
     dispatch(listCerts())
@@ -102,7 +108,6 @@ const MyCerts = ({ search }) => {
                   <th>walletID</th>
                   <th>Delete</th>
                   <th>Edit</th>
-                  <th>No of Certs</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,7 +135,6 @@ const MyCerts = ({ search }) => {
                         Edit
                       </Button>
                     </td>
-                    <td>{certs.filter((cert) => cert.user === user._id).length}</td>
                   </tr>
                 ))}
               </tbody>
@@ -167,6 +171,89 @@ const MyCerts = ({ search }) => {
         {loadingDelete && <Loading />}
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {loading && <Loading />}
+
+        {selectedUser && (
+          <div>
+            <h2>Certificates for user: {selectedUser.name}</h2>
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : adminCerts ? (
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Certificate ID</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Hash</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {adminCerts.map((cert) => (
+                    <tr key={cert._id}>
+                      <td>{cert._id}</td>
+                      <td>{cert.title}</td>
+                      <td>{cert.date}</td>
+                      <td>{cert.hash}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <p>No certificates found for this user.</p>
+            )}
+          </div>
+        )}
+
+        {adminCerts
+          .filter((filteredNote) =>
+            filteredNote.title.toLowerCase().includes(search.toLowerCase()),
+          )
+          .map((certs) => (
+            <Accordion>
+              <Card style={{ margin: 10 }} key={certs._id}>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header style={{ display: 'flex' }}>
+                    <Card.Header style={{ display: 'flex' }}>
+                      <span
+                        style={{
+                          color: 'black',
+                          textDecoration: 'none',
+                          cursor: 'pointer',
+                          alignSelf: 'center',
+                          fontSize: 30,
+                        }}
+                      >
+                        This Certificate is for " {certs.title} "
+                      </span>
+                      {isAdmin ? (
+                        <div>
+                          <Link to={`/certs/${certs._id}`}>
+                            <Button className="ml-4">Edit</Button>
+                          </Link>
+                          <Button
+                            variant="danger"
+                            className="ml-4"
+                            onClick={() => deleteHandler(certs._id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      ) : null}
+                    </Card.Header>
+                  </Accordion.Header>
+
+                  <Accordion.Body>
+                    {' '}
+                    <Card.Body>
+                      <CertsLIST certs={certs} />
+                    </Card.Body>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Card>
+            </Accordion>
+          ))}
 
         {/* Mapping for the users */}
         {certs

@@ -21,7 +21,7 @@ export const AdminSearchCertReducuer = (state = { adminCerts: [] }, action) => {
     case ADMIN_SEARCH_CERT_REQUEST:
       return { loading: true }
     case ADMIN_SEARCH_CERT_SUCCESS:
-      return { loading: false, certs: action.payload }
+      return { loading: false, adminCerts: action.payload }
     case ADMIN_SEARCH_CERT_FAIL:
       return { loading: false, error: action.payload }
 

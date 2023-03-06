@@ -19,7 +19,6 @@ import {
 
 export const AdminSearchCertAction = (user) => async (dispatch, getState) => {
   try {
-    console.log(user._id)
     const { userLogin: { userInfo } } = getState()
 
     if (!userInfo || !userInfo.isAdmin) {
@@ -45,6 +44,7 @@ export const AdminSearchCertAction = (user) => async (dispatch, getState) => {
       type: ADMIN_SEARCH_CERT_SUCCESS,
       payload: data,
     })
+    console.log(data)
   } catch (error) {
     const message =
       error.response && error.response.data.message
