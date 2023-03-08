@@ -1,5 +1,3 @@
-import { Button, Modal } from 'bootstrap';
-import React, { useState } from 'react'
 import { Aims, MERN, Promo, Testimonials, Vision, Want_To_Register } from '../Modals/Modals4Footer'
 import {
   Box,
@@ -35,9 +33,9 @@ const Footer = () => {
           </Column>
           <Column>
             <Heading>Social Media</Heading>
-            <FooterLink href="https://www.facebook.com/linton.bryanfox.9">
+            <FooterLink href="https://github.com/LinBrox">
               <i className="fab fa-facebook-f">
-                <span style={{ marginLeft: '10px' }}>Facebook</span>
+                <span style={{ marginLeft: '10px' }}>GitHub</span>
               </i>
             </FooterLink>
             <FooterLink href="https://www.instagram.com/lintonfox/?hl=en">

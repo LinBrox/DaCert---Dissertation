@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, Button, Card, Form, Table } from 'react-bootstrap'
+import { Accordion, Button, Card, Table } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import MainScreen from '../../components/MainScreen'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,11 +11,11 @@ import {
 import ErrorMessage from '../../components/ErrorMessage'
 import Loading from '../../components/Loading'
 import CertsLIST from '../../components/Certificate/CertsLIST'
-import GetCertData from '../../components/Admin/displayCertData'
 import { allUsers, deleteUserAction } from '../../actions/userActions'
+import { Alert } from 'react-bootstrap'
 
 const MyCerts = ({ search }) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
   const [_id, set_ID] = useState('')
@@ -69,8 +69,6 @@ const MyCerts = ({ search }) => {
     dispatch(AdminSearchCertAction(user))
   }
 
-
-
   useEffect(() => {
     dispatch(listCerts())
   }, [dispatch, deleted, successUpdate, successDelete])
@@ -99,123 +97,121 @@ const MyCerts = ({ search }) => {
   try {
     return (
       <MainScreen title={`Welcome back ${userInfo.name}...`}>
-  {isAdmin ? (
-    <>
-      <Table striped bordered hover>
-        <thead class="thead-dark">
-          <tr>
-            <th>User ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>walletID</th>
-            <th>Delete</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id} onClick={() => handleRowClick(user)}>
-              <td>{user._id}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.walletID}</td>
-              <td>
+        {isAdmin ? (
+          <>
+            <Table striped bordered hover>
+              <thead class="thead-dark">
+                <tr>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>walletID</th>
+                  <th>Admin</th>
+                  <th>New Cert?</th>
+                  <th>Delete</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id} onClick={() => handleRowClick(user)}>
+                    <td>{user._id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.walletID}</td>
+                    <td>{user.isAdmin ? 'Yes' : 'No'}</td>
+                    <td>
+                      <Link
+                        to={{
+                          pathname: '/createcert',
+                          state: { selectedUser : user },
+                        }}
+                      >
+                        <Button 
+                          variant="primary"
+                          className="ml-4"
+                        >
+                          Create
+                        </Button>
+                      </Link>
+                    </td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        className="ml-4"
+                        onClick={() => deleteHandlerUser(user._id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="warning"
+                        className="ml-4"
+                        onClick={() => deleteHandler(user._id)}
+                      >
+                        Edit
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
                 <Button
-                  variant="danger"
-                  className="ml-4"
-                  onClick={() => deleteHandlerUser(user._id)}
-                >
-                  Delete
-                </Button>
-              </td>
-              <td>
-                <Button
+                  padding-right="10"
+                  size="lg"
+                  style={{ width: '100%' }}
                   variant="success"
-                  className="ml-4"
-                  onClick={() => deleteHandler(user._id)}
+                  onClick={() => window.open('/verifyCert', 'VerifyCertWindow', 'width=800,height=600')}
                 >
-                  Edit
+                  Verify a Cert
                 </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+          </>
+        ) : null}
 
-      <Link to="/createcert">
-        <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
-          Create a new Certificate
-        </Button>
-      </Link>
+        {errorDelete && (
+          <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
+        )}
 
-      <Button
-        onClick={() => GetCertData(_id, setData)}
-        style={{ marginLeft: 10, marginBottom: 6 }}
-        size="lg"
-      >
-        Get a Certificate Based on ID
-      </Button>
+        {loadingDelete && <Loading />}
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {loading && <Loading />}
 
-      <div className="d-flex align-items-center">
-        <Form.Control
-          type="text"
-          id="formControlDefault"
-          placeholder="Enter certificate ID"
-          value={_id}
-          onChange={(e) => set_ID(e.target.value)}
-          style={{ marginRight: 10 }}
-        />
-        <Button
-          variant="primary"
-          onClick={() => GetCertData(_id, setData)}
-        >
-          Search
-        </Button>
-      </div>
-    </>
-  ) : null}
-
-  {errorDelete && (
-    <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
-  )}
-
-  {loadingDelete && <Loading />}
-  {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-  {loading && <Loading />}
-
-  {selectedUser && (
-    <div>
-      <h2>Certificates for user: {selectedUser.name}</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : adminCerts ? (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Certificate ID</th>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Hash</th>
-            </tr>
-          </thead>
-          <tbody>
-            {adminCerts.map((cert) => (
-              <tr key={cert._id}>
-                <td>{cert._id}</td>
-                <td>{cert.title}</td>
-                <td>{cert.date}</td>
-                <td>{cert.hash}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      ) : (
-        <p>No certificates found for this user.</p>
-      )}
-    </div>
-  )}
+        {selectedUser && (
+          <div>
+            <h2>Certificates for user: {selectedUser.name}</h2>
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : selectedUser.isAdmin ? (
+              <p>Admin user selected. Table not shown.</p>
+            ) : adminCerts ? (
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Certificate ID</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Hash</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {adminCerts.map((cert) => (
+                    <tr key={cert._id}>
+                      <td>{cert._id}</td>
+                      <td>{cert.title}</td>
+                      <td>{cert.date}</td>
+                      <td>{cert.hash}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <p>No certificates found for this user.</p>
+            )}
+          </div>
+        )}
         {/* Mapping for the Admins */}
         {adminCerts
           .filter((filteredNote) =>
@@ -240,9 +236,10 @@ const MyCerts = ({ search }) => {
                       </span>
                       {isAdmin ? (
                         <div>
-                          <Link to={`/certs/${certs._id}`}>
+                          {/* commented out this code because it was used for debugging and testing */}
+                          {/* <Link to={`/certs/${certs._id}`}>
                             <Button className="ml-4">Edit</Button>
-                          </Link>
+                          </Link> */}
                           <Button
                             variant="danger"
                             className="ml-4"
@@ -266,8 +263,13 @@ const MyCerts = ({ search }) => {
             </Accordion>
           ))}
 
+
         {/* Mapping for the users */}
-        {certs
+        {certs.length === 0 ? (
+          // <Alert variant="danger">You do not have any certificates.</Alert>
+          null
+        ) : (
+          certs
           .filter((filteredNote) =>
             filteredNote.title.toLowerCase().includes(search.toLowerCase()),
           )
@@ -290,9 +292,6 @@ const MyCerts = ({ search }) => {
                       </span>
                       {isAdmin ? (
                         <div>
-                          <Link to={`/certs/${certs._id}`}>
-                            <Button className="ml-4">Edit</Button>
-                          </Link>
                           <Button
                             variant="danger"
                             className="ml-4"
@@ -314,7 +313,8 @@ const MyCerts = ({ search }) => {
                 </Accordion.Item>
               </Card>
             </Accordion>
-          ))}
+          ))
+          )}
       </MainScreen>
     )
   } catch (error) {

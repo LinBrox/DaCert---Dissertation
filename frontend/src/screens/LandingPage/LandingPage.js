@@ -1,26 +1,25 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Container, Row } from 'react-bootstrap'
 import './LandingPage.css'
 
 const LandingPage = () => {
-
-  let navigate = useNavigate();
+  let navigate = useNavigate()
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
+    const userInfo = localStorage.getItem('userInfo')
 
-    if(userInfo){
-        navigate("/certs");
+    if (userInfo) {
+      navigate('/certs')
     }
-}, [navigate])
+  }, [navigate])
 
   return (
     <div className="main">
       <Container>
         <Row>
           <div className="intro-text">
-            <div style={{backgroundColor: "#191970"}}>
+            <div style={{ backgroundColor: '#191970' }}>
               <h1> Welcome to DaCert </h1>
               <p className="subtitle">
                 {' '}
@@ -34,17 +33,33 @@ const LandingPage = () => {
             </div>
             <div className="buttonContainer">
               <a href="/login">
-                <Button size="lg" className="landingbutton" variant="success" padding-right="10">
+                <Button
+                  size="lg"
+                  className="landingbutton"
+                  variant="success"
+                  // padding-right="10"
+                >
                   Login
                 </Button>
               </a>
               <a href="/register">
                 <Button
+                  padding-right="10"
                   size="lg"
                   className="landingbutton"
                   variant="info"
                 >
                   Register
+                </Button>
+              </a>
+              <a href="/verifyCert">
+                <Button
+                  padding-right="10"
+                  size="lg"
+                  className="landingbutton"
+                  variant="danger"
+                >
+                  Verify a Cert
                 </Button>
               </a>
             </div>

@@ -107,8 +107,8 @@ function SingleCert() {
                 {errorDelete && (
                   <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
                 )}
-                <Form.Group className="settings" controlId="name">
-                  <Form.Label className="label">Name of recipient</Form.Label>
+                <Form.Group controlId="name">
+                  <Form.Label>Name of recipient</Form.Label>
                   <Form.Control
                     type="name"
                     value={name}
@@ -116,8 +116,8 @@ function SingleCert() {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group className="settings" controlId="title">
-                  <Form.Label className="label">Name of Course</Form.Label>
+                <Form.Group controlId="title">
+                  <Form.Label>Name of Course</Form.Label>
                   <Form.Control
                     type="title"
                     value={title}
@@ -125,27 +125,19 @@ function SingleCert() {
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group className="settings" controlId="date">
-                  <Form.Label className="label">Date</Form.Label>
+                <Form.Group controlId="date">
+                  <Form.Label>Date</Form.Label>
                   <Form.Control
                     type="string"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group className="settings" controlId="date">
-                  <Form.Label className="label">Expiry Date</Form.Label>
-                  <Form.Control
-                    type="string"
-                    value={expDate}
-                    onChange={(e) => setExpDate(e.target.value)}
-                  />
-                </Form.Group>
                 {logoMessage && (
                   <ErrorMessage variant="danger">{logoMessage}</ErrorMessage>
                 )}
-                <Form.Group className="settings">
-                  <Form.Label className="label">Change Logo</Form.Label>
+                <Form.Group>
+                  <Form.Label>Change Logo</Form.Label>
                   <Form.Control
                     onChange={(e) => postDetails(e.target.files[0])}
                     id="custom-file"
@@ -155,11 +147,10 @@ function SingleCert() {
                   />
                 </Form.Group>
                 {loading && <Loading size={50} />}
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className="mr-2">
                   Update Cert
                 </Button>
                 <Button
-                  className="mx-2"
                   variant="danger"
                   onClick={() => deleteHandler(match.id)}
                 >
@@ -174,17 +165,14 @@ function SingleCert() {
           </Card>
         </Col>
         <Col
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          md={4}
+          className="d-flex align-items-center justify-content-center"
         >
-          <img src={logo} alt={name} className="logo" />
+          <img src={logo} alt={name} className="img-fluid" />
         </Col>
       </Row>
     </MainScreen>
-  )
+  );
 }
 
 export default SingleCert

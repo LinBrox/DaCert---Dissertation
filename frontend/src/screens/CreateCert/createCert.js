@@ -7,6 +7,7 @@ import Loading from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
 import { useNavigate } from 'react-router-dom'
 import { ethers } from 'ethers'
+import { useLocation } from 'react-router-dom';
 
 let contract
 
@@ -30,7 +31,7 @@ const CreateCert = () => {
   //Users Session
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-  console.log(userInfo._id)
+
 
   //FUNCTIONS
   const resetHandler = () => {
@@ -104,9 +105,9 @@ const CreateCert = () => {
     dispatch(createCertAction(name, title, date, hash, logo))
     if (!name || !title || !date || !hash || !logo) return
 
-    resetHandler()
-    navigate('/certs')
-    navigate(0)
+    // resetHandler()
+    // navigate('/certs')
+    // navigate(0)
   }
 
   return (

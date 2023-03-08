@@ -1,6 +1,17 @@
 const Certs = require('../models/certModel')
 const asycHandler = require('express-async-handler')
 
+const getCertByHash = asycHandler(async (req, res) => {
+  console.log('getCertByHash called with hash:', req.params.hash); 
+  const cert = await Certs.findOne({ hash: req.params.hash });
+
+  if (cert) {
+    res.json(cert);
+  } else {
+    res.status(404).json({ message: 'Certificate not found' });
+  }
+});
+
 const getCerts = asycHandler(async (req, res) => {
   const certs = await Certs.find({ user: req.user._id })
   res.json(certs)
@@ -36,14 +47,16 @@ const getCertById = asycHandler(async (req, res) => {
 const updateCert = asycHandler(async (req, res) => {
   const { name, title, date, hash, logo } = req.body
 
-  //this line finds the cert if it exists based on the Id of the user
   const cert = await Certs.findById(req.params.id)
 
-  //checks to see if the cert belongs to the user
-  if (cert.user.toString() !== req.user._id.toString()) {
-    res.status(401)
-    throw new Error('You cannot preform this action.')
-  }
+  // // Check if the user is an admin
+  // if (!req.user.isAdmin) {
+  //   // If not an admin, check if the certificate belongs to the user
+  //   if (cert.user.toString() !== req.user._id.toString()) {
+  //     res.status(401)
+  //     throw new Error('You cannot perform this action.')
+  //   }
+  // }
 
   if (cert) {
     cert.name = name
@@ -56,18 +69,12 @@ const updateCert = asycHandler(async (req, res) => {
     res.json(updatedCert)
   } else {
     res.status(401)
-    throw new Error('Certificate Note Found')
+    throw new Error('Certificate Not Found')
   }
 })
 
 const deleteCert = asycHandler(async (req, res) => {
   const cert = await Certs.findById(req.params.id)
-
-  if (cert.user.toString() !== req.user._id.toString()) {
-    res.status(401)
-    throw new Error('You cannot preform this action.')
-  }
-
   if (cert) {
     await cert.remove()
     res.json({ message: 'Certificate Removed' })
@@ -77,4 +84,4 @@ const deleteCert = asycHandler(async (req, res) => {
   }
 })
 
-module.exports = { getCerts, createCert, getCertById, updateCert, deleteCert }
+module.exports = { getCerts, createCert, getCertById, updateCert, deleteCert, getCertByHash }

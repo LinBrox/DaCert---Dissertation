@@ -29,11 +29,13 @@
     margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
+    padding-right: 10;
 }
 
 .landingbutton {
     width: 200px;
     height: 55px;
+    padding-right: 10;
 }
 
 @media only screen and (min-width: 768px) {

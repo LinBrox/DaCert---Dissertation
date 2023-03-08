@@ -20,7 +20,7 @@ const Header = ({ setSearch }) => {
     <Navbar bg="primary" expand="lg" variant="dark">
       <Container>
         <Navbar.Brand>
-          <Link to="/"> BlockCert</Link>
+          <Link to="/"> DaCert</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">

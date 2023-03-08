@@ -14,6 +14,7 @@ import {
 } from 'react-router-dom'
 import DashBoard from './screens/DashBoard/MyCerts'
 import SingleCert from './screens/SingleCert/SingleCert'
+import VerifyCert from './components/VerifyCert/Vcert'
 import { useState } from 'react'
 import ContactForm from './components/Footer/contactUs'
 
@@ -34,6 +35,7 @@ const App = () => {
       <Route path="/certs/:id" element={<SingleCert />} />
       <Route path="/certs" element={<DashBoard search={search} />} />
       <Route path="/contactUs" element={<ContactForm />} />
+      <Route path="/verifyCert" element={<VerifyCert />} />
     </Routes>
     <Footer />
   </Router>

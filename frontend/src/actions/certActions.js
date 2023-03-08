@@ -178,13 +178,17 @@ export const updateCertAction = (id, name, title, date, hash, logo) => async (
       userLogin: { userInfo },
     } = getState()
 
+    if (!userInfo.isAdmin) {
+      throw new Error('Only admin users can update certificates.')
+    }
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-
+    if (userInfo.isAdmin) {
     const { data } = await axios.put(
       `/api/certs/${id}`,
       { name, title, date, hash, logo },
@@ -195,6 +199,7 @@ export const updateCertAction = (id, name, title, date, hash, logo) => async (
       type: CERT_UPDATE_SUCCESS,
       payload: data,
     })
+  }
   } catch (error) {
     const message =
       error.response && error.response.data.message

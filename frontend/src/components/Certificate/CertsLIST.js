@@ -11,6 +11,7 @@ function CertsLIST({ certs }) {
     const DOMURL = window.URL || window.webkitURL || window
     canvas.width = 1000
     canvas.height = 700
+    
 
     const img = new Image()
     const svgBlob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' })
