@@ -33,6 +33,13 @@ function CertsLIST({ certs }) {
     }
     img.src = url
   }
+    // Helper function to format a BigNumber as a string with '/' characters
+    const formatBigNumber = (bigNumber) => {
+      // Convert the BigNumber to a string
+      let str = bigNumber.toString()
+      // Insert '/' characters after every second digit
+      return str.slice(0, 2) + '/' + str.slice(2, 4) + '/' + str.slice(4)
+    }
   return (
     <blockquote className="blockquote mb-0">
       <Button variant="primary" onClick={generatePDF}>

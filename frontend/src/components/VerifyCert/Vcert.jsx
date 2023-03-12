@@ -1,35 +1,36 @@
-import MainScreen from "../MainScreen";
+import MainScreen from '../MainScreen'
 import GetCertData from '../Admin/displayCertData'
-import { Form } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import CertsLIST from "../Certificate/CertsLIST";
+import { Form } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import CertsLIST from '../Certificate/CertsLIST'
+import VerifyTable from './verifyTable'
 
 const VerifyCert = () => {
   const [_id, set_ID] = useState('')
   const [data, setData] = useState([])
   const [lastSearchedID, setLastSearchedID] = useState('')
 
+
   // Helper function to format a BigNumber as a string with '/' characters
   const formatBigNumber = (bigNumber) => {
     // Convert the BigNumber to a string
-    let str = bigNumber.toString();
+    let str = bigNumber.toString()
     // Insert '/' characters after every second digit
-    return str.slice(0, 2) + '/' + str.slice(2, 4) + '/' + str.slice(4);
+    return str.slice(0, 2) + '/' + str.slice(2, 4) + '/' + str.slice(4)
   }
 
   const searchForCertificateByHash = async (lastSearchedID) => {
     try {
-      const response = await axios.get(`/api/certs/hash/${lastSearchedID}`);
-      setData(response.data);
+      const response = await axios.get(`/api/certs/hash/${lastSearchedID}`)
+      setData(response.data)
     } catch (error) {
-      console.error(error);
-      // Handle the error here (e.g. display an error message)
+      console.error(error)
     }
   }
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {}, [data])
 
   return (
     <MainScreen>
@@ -51,27 +52,17 @@ const VerifyCert = () => {
             onClick={() => {
               GetCertData(_id, setData)
               setLastSearchedID(_id)
-              searchForCertificateByHash(_id)}}
-            
+              searchForCertificateByHash(_id)
+            }}
           >
             Search
           </Button>
         </Form>
-        {data.length > 0 && (
-          <>
-            <h4>Results:</h4>
-            <p>Name: {data[0]}</p>
-            <p>Title: {data[1]}</p>
-            <p>Date: {formatBigNumber(data[2])}</p>
-            <p>Expiry Date: {formatBigNumber(data[3])}</p>
-            <p>Certificate ID: {lastSearchedID}</p>
-            {/* Display the data here */}
-          </>
-        )}
       </>
       <CertsLIST certs={data} />
+      <VerifyTable certs={data} />
     </MainScreen>
-  );
-};
+  )
+}
 
-export default VerifyCert;
+export default VerifyCert

@@ -91,7 +91,7 @@ export const listCerts = () => async (dispatch, getState) => {
     })
   }
 }
-export const createCertAction = (name, title, date, hash, logo) => async (
+export const createCertAction = (name, title, date, hash, recipID, logo) => async (
   dispatch,
   getState,
 ) => {
@@ -113,7 +113,7 @@ export const createCertAction = (name, title, date, hash, logo) => async (
 
     const { data } = await axios.post(
       `/api/certs/create`,
-      { name, title, date, hash, logo },
+      { name, title, date, hash, recipID, logo },
       config,
     )
 

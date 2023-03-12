@@ -11,9 +11,10 @@ import { useLocation } from 'react-router-dom';
 
 let contract
 
-const CreateCert = () => {
+const CreateCert = (user) => {
   //VARIABLES
   const [name, setName] = useState('')
+  const [recipID, SetRecID] = useState('')
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
   const [expDate, setExpDate] = useState('')
@@ -102,13 +103,15 @@ const CreateCert = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     const hash = _id
-    dispatch(createCertAction(name, title, date, hash, logo))
-    if (!name || !title || !date || !hash || !logo) return
+    dispatch(createCertAction(name, title, date, hash, recipID, logo))
+    if (!name || !title || !date || !hash || !recipID || !logo) return
 
     // resetHandler()
     // navigate('/certs')
     // navigate(0)
   }
+
+  console.log(user._id)
 
   return (
     <MainScreen title="Create a new Cert">
@@ -118,7 +121,16 @@ const CreateCert = () => {
           <Form onSubmit={submitHandler}>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="name">
-              <Form.Label>Name of recipient</Form.Label>
+              <Form.Label>User ID of Recipient</Form.Label>
+              <Form.Control
+                type="name"
+                value={recipID}
+                placeholder="Enter the ID of the recipient"
+                onChange={(e) => SetRecID(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="name">
+              <Form.Label>Name of Recipient</Form.Label>
               <Form.Control
                 type="name"
                 value={name}
@@ -149,6 +161,7 @@ const CreateCert = () => {
               <Form.Control
                 type="name"
                 value={expDate}
+                placeholder="The Date The Certificate Should Expire"
                 onChange={(e) => setExpDate(e.target.value)}
               />
             </Form.Group>
@@ -183,7 +196,7 @@ const CreateCert = () => {
               onClick={resetHandler}
               variant="danger"
             >
-              Reset Feilds
+              Reset Fields
             </Button>
           </Form>
         </Card.Body>

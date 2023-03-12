@@ -18,13 +18,13 @@ const getCerts = asycHandler(async (req, res) => {
 })
 
 const createCert = asycHandler(async (req, res) => {
-  const { name, title, date, hash, logo } = req.body
+  const { name, title, date, hash, recipID, logo } = req.body
 
-  if (!name || !title || !date || !hash | !logo) {
+  if (!name || !title || !date || !hash || !recipID || !logo) {
     res.status(400)
     throw new Error('Please fill all the fields')
   } else {
-    const cert = new Certs({ user: req.user._id, name, title, date, hash, logo })
+    const cert = new Certs({name, title, date, hash, user: recipID, logo })
 
     const createdCert = await cert.save()
 

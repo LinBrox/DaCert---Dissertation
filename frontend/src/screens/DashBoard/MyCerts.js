@@ -109,7 +109,7 @@ const MyCerts = ({ search }) => {
                   <th>Admin</th>
                   <th>New Cert?</th>
                   <th>Delete</th>
-                  <th>Edit</th>
+                  {/* <th>Edit</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -124,7 +124,7 @@ const MyCerts = ({ search }) => {
                       <Link
                         to={{
                           pathname: '/createcert',
-                          state: { selectedUser : user },
+                          state: { selectedUser : user._id },
                         }}
                       >
                         <Button 
@@ -144,7 +144,7 @@ const MyCerts = ({ search }) => {
                         Delete
                       </Button>
                     </td>
-                    <td>
+                    {/* <td>
                       <Button
                         variant="warning"
                         className="ml-4"
@@ -152,7 +152,7 @@ const MyCerts = ({ search }) => {
                       >
                         Edit
                       </Button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
