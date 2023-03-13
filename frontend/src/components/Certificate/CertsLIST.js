@@ -11,7 +11,6 @@ function CertsLIST({ certs }) {
     const DOMURL = window.URL || window.webkitURL || window
     canvas.width = 1000
     canvas.height = 700
-    
 
     const img = new Image()
     const svgBlob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' })
@@ -33,13 +32,13 @@ function CertsLIST({ certs }) {
     }
     img.src = url
   }
-    // Helper function to format a BigNumber as a string with '/' characters
-    const formatBigNumber = (bigNumber) => {
-      // Convert the BigNumber to a string
-      let str = bigNumber.toString()
-      // Insert '/' characters after every second digit
-      return str.slice(0, 2) + '/' + str.slice(2, 4) + '/' + str.slice(4)
-    }
+  // Helper function to format a BigNumber as a string with '/' characters
+  const formatBigNumber = (bigNumber) => {
+    // Convert the BigNumber to a string
+    let str = bigNumber.toString()
+    // Insert '/' characters after every second digit
+    return str.slice(0, 2) + '/' + str.slice(2, 4) + '/' + str.slice(4)
+  }
   return (
     <blockquote className="blockquote mb-0">
       <Button variant="primary" onClick={generatePDF}>
@@ -117,16 +116,18 @@ function CertsLIST({ certs }) {
         >
           on
         </text>
-        <text
-          x={String(500)}
-          y={String(450)}
-          textAnchor="middle"
-          fill="white"
-          id="date"
-          fontSize="50"
-        >
-          {certs.date}
-        </text>
+        {certs.date && (
+          <text
+            x={String(500)}
+            y={String(450)}
+            textAnchor="middle"
+            fill="white"
+            id="date"
+            fontSize="50"
+          >
+            {formatBigNumber(certs.date)}
+          </text>
+        )}
         <line x1="400" y1="510" x2="600" y2="510" id="titleUnderLine" />
         <text
           x={String(100)}

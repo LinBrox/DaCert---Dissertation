@@ -69,6 +69,14 @@ const MyCerts = ({ search }) => {
     dispatch(AdminSearchCertAction(user))
   }
 
+  // Helper function to format a BigNumber as a string with '/' characters
+  const formatBigNumber = (bigNumber) => {
+    // Convert the BigNumber to a string
+    let str = bigNumber.toString()
+    // Insert '/' characters after every second digit
+    return str.slice(0, 2) + '/' + str.slice(2, 4) + '/' + str.slice(4)
+  }
+
   useEffect(() => {
     dispatch(listCerts())
   }, [dispatch, deleted, successUpdate, successDelete])
@@ -124,13 +132,10 @@ const MyCerts = ({ search }) => {
                       <Link
                         to={{
                           pathname: '/createcert',
-                          state: { selectedUser : user._id },
+                          state: { selectedUser: user._id },
                         }}
                       >
-                        <Button 
-                          variant="primary"
-                          className="ml-4"
-                        >
+                        <Button variant="primary" className="ml-4">
                           Create
                         </Button>
                       </Link>
@@ -157,15 +162,21 @@ const MyCerts = ({ search }) => {
                 ))}
               </tbody>
             </Table>
-                <Button
-                  padding-right="10"
-                  size="lg"
-                  style={{ width: '100%' }}
-                  variant="success"
-                  onClick={() => window.open('/verifyCert', 'VerifyCertWindow', 'width=800,height=600')}
-                >
-                  Verify a Cert
-                </Button>
+            <Button
+              padding-right="10"
+              size="lg"
+              style={{ width: '100%' }}
+              variant="success"
+              onClick={() =>
+                window.open(
+                  '/verifyCert',
+                  'VerifyCertWindow',
+                  'width=800,height=600',
+                )
+              }
+            >
+              Verify a Cert
+            </Button>
           </>
         ) : null}
 
@@ -201,7 +212,7 @@ const MyCerts = ({ search }) => {
                     <tr key={cert._id}>
                       <td>{cert._id}</td>
                       <td>{cert.title}</td>
-                      <td>{cert.date}</td>
+                      <td>{formatBigNumber(cert.date)}</td>
                       <td>{cert.hash}</td>
                     </tr>
                   ))}
@@ -263,58 +274,55 @@ const MyCerts = ({ search }) => {
             </Accordion>
           ))}
 
-
         {/* Mapping for the users */}
-        {certs.length === 0 ? (
-          // <Alert variant="danger">You do not have any certificates.</Alert>
-          null
-        ) : (
-          certs
-          .filter((filteredNote) =>
-            filteredNote.title.toLowerCase().includes(search.toLowerCase()),
-          )
-          .map((certs) => (
-            <Accordion>
-              <Card style={{ margin: 10 }} key={certs._id}>
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header style={{ display: 'flex' }}>
-                    <Card.Header style={{ display: 'flex' }}>
-                      <span
-                        style={{
-                          color: 'black',
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                          alignSelf: 'center',
-                          fontSize: 30,
-                        }}
-                      >
-                        This Certificate is for " {certs.title} "
-                      </span>
-                      {isAdmin ? (
-                        <div>
-                          <Button
-                            variant="danger"
-                            className="ml-4"
-                            onClick={() => deleteHandler(certs._id)}
+        {certs.length === 0
+          ? // <Alert variant="danger">You do not have any certificates.</Alert>
+            null
+          : certs
+              .filter((filteredNote) =>
+                filteredNote.title.toLowerCase().includes(search.toLowerCase()),
+              )
+              .map((certs) => (
+                <Accordion>
+                  <Card style={{ margin: 10 }} key={certs._id}>
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header style={{ display: 'flex' }}>
+                        <Card.Header style={{ display: 'flex' }}>
+                          <span
+                            style={{
+                              color: 'black',
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                              alignSelf: 'center',
+                              fontSize: 30,
+                            }}
                           >
-                            Delete
-                          </Button>
-                        </div>
-                      ) : null}
-                    </Card.Header>
-                  </Accordion.Header>
+                            This Certificate is for " {certs.title} "
+                          </span>
+                          {isAdmin ? (
+                            <div>
+                              <Button
+                                variant="danger"
+                                className="ml-4"
+                                onClick={() => deleteHandler(certs._id)}
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          ) : null}
+                        </Card.Header>
+                      </Accordion.Header>
 
-                  <Accordion.Body>
-                    {' '}
-                    <Card.Body>
-                      <CertsLIST certs={certs} />
-                    </Card.Body>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Card>
-            </Accordion>
-          ))
-          )}
+                      <Accordion.Body>
+                        {' '}
+                        <Card.Body>
+                          <CertsLIST certs={certs} />
+                        </Card.Body>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Card>
+                </Accordion>
+              ))}
       </MainScreen>
     )
   } catch (error) {

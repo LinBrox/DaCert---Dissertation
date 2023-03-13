@@ -106,9 +106,9 @@ const CreateCert = (user) => {
     dispatch(createCertAction(name, title, date, hash, recipID, logo))
     if (!name || !title || !date || !hash || !recipID || !logo) return
 
-    // resetHandler()
-    // navigate('/certs')
-    // navigate(0)
+    resetHandler()
+    navigate('/certs')
+    navigate(0)
   }
 
   console.log(user._id)

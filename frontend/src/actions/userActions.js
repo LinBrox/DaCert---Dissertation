@@ -147,10 +147,10 @@ export const updateProfile = (user, isAdmin) => async (dispatch, getState) => {
       { user, isAdmin },
       config,
     )
-    dispatch({ type: USER_UPDATE_SUCCESS, paylaod: data })
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data })
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
+    // localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,

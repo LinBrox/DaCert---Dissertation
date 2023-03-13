@@ -168,10 +168,10 @@ const ProfileScreen = () => {
                     custom
                   />
                 </Form.Group>
-                <Button varient="primary" onClick={connectMetaMask}>
+                <Button variant="primary" onClick={connectMetaMask}>
                   Click Here to sync Wallet
                 </Button>
-                <Button type="submit" varient="primary">
+                <Button type="submit" variant="primary">
                   Update
                 </Button>
               </Form>
