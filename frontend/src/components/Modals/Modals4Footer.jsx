@@ -189,7 +189,7 @@ export function Want_To_Register() {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Want to Register
+        Sign Up?{' '}
       </Button>
 
       <Modal show={show} onHide={handleClose}>

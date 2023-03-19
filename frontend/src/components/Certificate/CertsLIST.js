@@ -41,8 +41,25 @@ function CertsLIST({ certs }) {
   }
   return (
     <blockquote className="blockquote mb-0">
-      <Button variant="primary" onClick={generatePDF}>
+      <Button
+        padding-right="10"
+        size="lg"
+        style={{ width: '100%' }}
+        variant="primary"
+        onClick={generatePDF}
+      >
         Generate PDF to send
+      </Button>
+      <Button
+        padding-right="10"
+        size="lg"
+        style={{ width: '100%' }}
+        variant="success"
+        onClick={() =>
+          window.open('/verifyCert', 'VerifyCertWindow', 'width=800,height=600')
+        }
+      >
+        Verify a Cert
       </Button>
       <svg width="1000" height="700" id="certificate" className="border">
         <rect

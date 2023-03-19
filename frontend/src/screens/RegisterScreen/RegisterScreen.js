@@ -38,7 +38,7 @@ const RegisterScreen = () => {
     }
   }, [navigate, userInfo])
 
-  const submitHandler = async (e) => {
+  const submitHandler =  async (e) => {
     e.preventDefault()
 
     if (password !== confirmPassword) {

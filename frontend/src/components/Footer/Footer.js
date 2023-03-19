@@ -22,7 +22,7 @@ const Footer = () => {
           </Column>
           <Column>
             <Heading>Services</Heading>
-            <Want_To_Register>Want to Register</Want_To_Register>
+            <Want_To_Register>Sign Up?</Want_To_Register>
             <Promo>Promotion</Promo>
             <MERN>MERN</MERN>
             
