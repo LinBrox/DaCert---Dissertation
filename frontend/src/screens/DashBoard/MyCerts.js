@@ -191,7 +191,7 @@ const MyCerts = ({ search }) => {
 
         {selectedUser && (
           <div>
-            <h2>Certificates for user:: {selectedUser.name}</h2>
+            <h2>Certificates for user: {selectedUser.name}</h2>
             {loading ? (
               <p>Loading...</p>
             ) : error ? (
