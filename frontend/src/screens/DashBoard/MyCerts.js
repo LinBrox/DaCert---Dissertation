@@ -142,6 +142,7 @@ const MyCerts = ({ search }) => {
                     </td>
                     <td>
                       <Button
+                      data-test-id="DELETE-button"
                         variant="danger"
                         className="ml-4"
                         onClick={() => deleteHandlerUser(user._id)}

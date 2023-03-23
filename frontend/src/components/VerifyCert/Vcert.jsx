@@ -40,7 +40,7 @@ const VerifyCert = () => {
         </div>
         <Form className="d-flex justify-content-center align-items-center">
           <Form.Control
-            type="text"
+            type="certID"
             id="formControlDefault"
             placeholder="Enter certificate ID"
             value={_id}
@@ -48,6 +48,7 @@ const VerifyCert = () => {
             style={{ marginRight: 10 }}
           />
           <Button
+          data-test-id="search-button"
             variant="primary"
             onClick={() => {
               GetCertData(_id, setData)

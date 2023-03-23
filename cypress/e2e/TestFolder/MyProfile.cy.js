@@ -1,0 +1,15 @@
+describe('template spec', () => {
+  it('Logs in with User credentials', () => {
+    cy.viewport(1920, 1080)
+    cy.visit('http://localhost:3000/login')
+    cy.get('input[type="email"]').type('1@1.com')
+    cy.get('input[type="password"]').type('1')
+    cy.get('button[type="submit"]').click()
+    cy.wait(1000)
+    cy.visit('http://localhost:3000/profile')
+    cy.get('input[type="email"]').type('11')
+    cy.get('button[type="submit"]').click()
+    cy.wait(1000)
+    cy.visit('http://localhost:3000/')
+  })
+})

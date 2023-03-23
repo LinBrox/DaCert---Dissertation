@@ -42,6 +42,7 @@ function CertsLIST({ certs }) {
   return (
     <blockquote className="blockquote mb-0">
       <Button
+        type = "generatePDF"
         padding-right="10"
         size="lg"
         style={{ width: '100%' }}
@@ -52,6 +53,7 @@ function CertsLIST({ certs }) {
       </Button>
       <Button
         padding-right="10"
+        type = "verifyCert"
         size="lg"
         style={{ width: '100%' }}
         variant="success"
