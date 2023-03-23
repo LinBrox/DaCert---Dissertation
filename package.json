@@ -3,6 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
+    "engines": {
+        "node": "18.12.1",
+        "npm": "8.19.2"
+    },
     "scripts": {
         "start": "nodemon backend/server.js",
         "client": "npm start --prefix frontend",
@@ -49,9 +53,5 @@
         "sass": "^1.57.1",
         "sass-loader": "^13.2.0",
         "webpack": "^5.75.0"
-    },
-    "engines": {
-        "node": "18.12.1",
-        "npm": "8.19.2"
     }
 }
