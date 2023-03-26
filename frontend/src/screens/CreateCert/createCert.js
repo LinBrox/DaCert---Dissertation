@@ -182,6 +182,7 @@ const CreateCert = (user) => {
             >
               Push To BlockChain
             </Button>
+            { _id && (
             <Button
               className="btn btn-primary btn-lg btn-block"
               type="submit"
@@ -189,6 +190,7 @@ const CreateCert = (user) => {
             >
               Save Certificate
             </Button>
+            )}
             {loading && <Loading size={50} />}
             <Button
               type="button"
